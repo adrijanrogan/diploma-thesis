@@ -1,6 +1,10 @@
 # Diploma thesis
 
-My diploma thesis $\LaTeX$ project.
+My diploma thesis $\LaTeX$ project. Open `main.pdf` to view the compiled PDF. The presentation PDF is located at `presentation/presentation.pdf`.
+
+RUL link: https://repozitorij.uni-lj.si/IzpisGradiva.php?id=140248
+
+Compiled 
 
 ## Povzetek
 
