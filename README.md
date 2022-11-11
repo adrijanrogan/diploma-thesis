@@ -4,8 +4,6 @@ My diploma thesis $\LaTeX$ project. Open `main.pdf` to view the compiled PDF. Th
 
 RUL link: https://repozitorij.uni-lj.si/IzpisGradiva.php?id=140248
 
-Compiled 
-
 ## Povzetek
 
 **Naslov:** Kaos v diskretnih dinamičnih sistemih
