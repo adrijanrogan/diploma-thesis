@@ -1,8 +1,3 @@
-% 
-%
-%
-%
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{isrmdelo}
 
@@ -22,7 +17,7 @@
 %   Opcije
 %-----------------------------------------------------------------------------
 
-% vse ostale moznosti (fleqn, twocolumn, ...) podamo naprej v paket book
+% vse ostale moznosti podamo naprej v paket book
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 
 \ProcessOptions\relax
@@ -41,7 +36,6 @@
 \WarningFilter{hyperref}{Option}
 \RequirePackage{hyperxmp}
 \RequirePackage[pdfa,pdfapart=1,pdfaconformance=B]{hyperref}
-% Poskrbi za glave strani
 \RequirePackage{fancyhdr}
 
 % algorithms
@@ -63,8 +57,8 @@
     pdfproducer={pdfTeX},
     pdfsubject={matematika},
     pdfkeywords=\@kljucnebesede}
-  \RequirePackage[a-1b]{pdfx}
   \let\C\undefined
+  \RequirePackage[a-1b, mathxmp]{pdfx}
 }
 
 %-----------------------------------------------------------------------------
@@ -77,7 +71,7 @@
 \addtolength{\evensidemargin}{-40pt}
 
 % Razmik med vrsticami
-\renewcommand{\baselinestretch}{1.3} % ustrezen razmik med vrsticami
+\renewcommand{\baselinestretch}{1.3}
 % Potreben prostor na vrhu
 \setlength{\headheight}{15pt}
 % TODO what does this do
@@ -85,15 +79,17 @@
 {\markboth{\MakeUppercase{\thechapter.\ #1}}{}} \renewcommand{\sectionmark}[1]%
 {\markright{\MakeUppercase{\thesection.\ #1}}} \renewcommand{\headrulewidth}{0.5pt} \renewcommand{\footrulewidth}{0pt}
 
+\setlength{\abovecaptionskip}{0pt plus 10pt}
+
 %-----------------------------------------------------------------------------
 %   Oblikovanje glave
 %-----------------------------------------------------------------------------
 
 \fancyhf{}
 \fancyhead[LE,RO]{\sl \thepage} 
-%\fancyhead[LO]{\sl \rightmark} \fancyhead[RE]{\sl \leftmark}
-\fancyhead[RE]{\sc \@avtor}
-\fancyhead[LO]{\sc Diplomska naloga}
+% \fancyhead[LO]{\sl \rightmark} \fancyhead[RE]{\sl \leftmark}
+% \fancyhead[RE]{\sc \@avtor}
+% \fancyhead[LO]{\sc Diplomska naloga}
 
 %-----------------------------------------------------------------------------
 %   Podatki o delu
@@ -108,6 +104,8 @@
 \newcommand{\naslov}[1]{\def\@naslov{#1}}
 \renewcommand{\title}[1]{\def\@title{#1}}
 \newcommand{\letnica}[1]{\def\@letnica{#1}}
+\newcommand{\opis}[1]{\def\@opis{#1}}
+\newcommand{\desc}[1]{\def\@desc{#1}}
 \newcommand{\povzetek}[1]{\def\@povzetek{#1}}
 \newcommand{\abstract}[1]{\def\@abstract{#1}}
 \newcommand{\klasifikacija}[1]{\def\@klasifikacija{#1}}
@@ -125,16 +123,16 @@
 \newtheorem{opomba}[definicija]{Opomba}
 \newtheorem{zgled*}[definicija]{Zgled}
 
-\newenvironment{dokaz}[1][Dokaz]{\begin{proof}[#1]}{\end{proof}}
-\newenvironment{primer}[1][]{\begin{primer*}[#1]\renewcommand*{\qedsymbol}{$\diamondsuit$}\pushQED{\qed}}{\popQED\end{primer*}}
-\newenvironment{zgled}[1][]{\begin{zgled*}[#1]\renewcommand*{\qedsymbol}{$\diamondsuit$}\pushQED{\qed}}{\popQED\end{zgled*}}
-
 % Tekst napisan poševno
-\theoremstyle{plain} % tekst napisan posevno
+\theoremstyle{plain}
 \newtheorem{lema}[definicija]{Lema}
 \newtheorem{izrek}[definicija]{Izrek}
 \newtheorem{trditev}[definicija]{Trditev}
 \newtheorem{posledica}[definicija]{Posledica}
+
+\newenvironment{dokaz}[1][Dokaz]{\begin{proof}[#1]}{\end{proof}}
+\newenvironment{primer}[1][]{\begin{primer*}[#1]}{\end{primer*}}
+\newenvironment{zgled}[1][]{\begin{zgled*}[#1]}{\end{zgled*}}
 
 %-----------------------------------------------------------------------------
 %   Razno
@@ -210,6 +208,38 @@ Za objavo in koriščenje rezultatov diplomske naloge je potrebno pisno privolje
 \clearemptydoublepage
 
 %-----------------------------------------------------------------------------
+%   Opis
+%-----------------------------------------------------------------------------
+
+\thispagestyle{empty}
+\
+\vfill
+
+\bigskip
+\noindent\textbf{Kandidat:} \@avtor\\
+\noindent\textbf{Naslov:} \@naslov\\
+\noindent\textbf{Vrsta naloge:} diplomska naloga na univerzitetnem programu prve stopnje Računalništvo in matematika\\
+\@unless{\@blank{\@mentor}}{\noindent\textbf{Mentor:} \@mentor\\}
+\@unless{\@blank{\@mentorica}}{\noindent\textbf{Mentorica:} \@mentorica\\}
+\@unless{\@blank{\@somentor}}{\noindent\textbf{Somentor:} \@somentor}
+\@unless{\@blank{\@somentorica}}{\noindent\textbf{Somentorica:} \@somentorica}
+
+\bigskip
+\noindent\textbf{Opis:}\\
+\@opis
+
+\bigskip
+\noindent\textbf{Title:} \@title
+
+\bigskip
+\noindent\textbf{Description:}\\
+\@desc
+
+\vfill
+\vspace{2cm}
+\clearemptydoublepage
+
+%-----------------------------------------------------------------------------
 %   Kazalo
 %-----------------------------------------------------------------------------
 
@@ -225,6 +255,7 @@ Za objavo in koriščenje rezultatov diplomske naloge je potrebno pisno privolje
 
 \selectlanguage{slovene}
 \chapter*{Povzetek}
+\addcontentsline{toc}{chapter}{Povzetek}
 
 \noindent\textbf{Naslov:} \@naslov
 \bigskip
@@ -239,6 +270,7 @@ Za objavo in koriščenje rezultatov diplomske naloge je potrebno pisno privolje
 
 \selectlanguage{english}
 \chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
 
 \noindent\textbf{Title:} \@title
 \bigskip
